@@ -4,9 +4,18 @@ name: Build with default profile - "slim"
 
 
 on:
-  release:
-    types: created
-  push:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+  watch:
+    types: started
+#  schedule:
+#    - cron: 0 21 */7 * * 
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -14,7 +23,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        slim_profile: ['slim', 'r1cl', 'official']
+        slim_profile: ['slim']
 
     steps:
     - name: Start job for profiles
